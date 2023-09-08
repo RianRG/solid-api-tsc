@@ -26,7 +26,7 @@ export class UserController{
   }
 
   async loginUser(req: Request, res: Response){
-    const { name, email, password } = req.body;
+    const { email, password } = req.body;
 
     try{
       await this.loginUsers.execute({

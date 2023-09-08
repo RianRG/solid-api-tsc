@@ -1,7 +1,7 @@
 import { User } from "../../entities/User";
 import { IUtilities } from "../../useCases/IUtilities";
 import { UsersDTO } from "../UsersDTO";
-
+import bcrypt from 'bcryptjs';
 let users: User[] = [];
 
 export class MongoRepos implements IUtilities{
@@ -15,14 +15,10 @@ export class MongoRepos implements IUtilities{
     users.push(user);
   }
 
-  async login(data: Omit<UsersDTO, 'name'>): Promise<User> {
-    const { email, password } = data;
-    const usuario = users.find(item =>
-      item.email === email && item.password === password
-  )
-
-    return usuario;
-  }
+  // async login(data: Omit<UsersDTO, 'name'>): Promise<User> {
+  //   const { email, password } = data;
+  //   return user;
+  // }
 }
 
 export { users };

@@ -12,8 +12,28 @@ router.get('/users', (req, res) =>{
   res.json(users);
 })
 
-router.post('/userslogin', (req, res) =>{
-  return userController.loginUser(req, res);
+router.post('/userslogin', async (req, res) =>{
+  return await userController.loginUser(req, res);
+})
+
+router.get('/listloggers', async (req, res) =>{
+  
+  try{
+
+      const { authorization } = req.headers;
+    const auth = authorization.split(' ')[1];
+    console.log(auth);
+
+    users.forEach(item =>{
+      if(auth == item.token){
+        return res.status(200).json(item);
+      }
+    })
+
+  } catch(err){
+    return res.status(400).json({msg: 'Error'});
+  }
+
 })
 
 export { router };
