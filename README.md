@@ -2,8 +2,8 @@
 
 A simple non functional API that contains SOLID concepts
 
-## S: Single Dependency Principle
-High-level modules should not depend on low-level modules. Both should depend on abstractions. This principle encourages loose coupling and modularity, making your code more maintainable and testable.
+## S: Single Responsability Principle
+One class should have only one reason to change, and prepairing itself for a single responsability
 
 ```
 interface InvoicePersistence {
@@ -45,25 +45,22 @@ class Square implements Shape {
 ```
 
 ## L: Liskov Substitution Principle
-Subtypes must be substitutable for their base types. This principle ensures that inheritance is used correctly and that your code behaves predictably.
+Each subclass or derivated class should be passive for substitution by your base class or dad class.
 
 ```
-interface CoffeeMachine {
-    brewFilterCoffee(): Coffee;
-}
-
-class FilterCoffeeMachine implements CoffeeMachine {
-    brewFilterCoffee(): Coffee {
-        // Brew filter coffee
+class BasicAccount{
+    yield(){
+        return this.salary*0.15
     }
 }
 
-class EspressoMachine implements CoffeeMachine {
-    brewFilterCoffee(): Coffee {
-        // Throw an exception or return a default coffee
+class SalaryAcount extends BasicAccount{
+    yield(){
+        throw new Error('Not authorizd')
     }
 }
 ```
+On this case, both functions return different results. So if a user uses SalaryAccount expecting the same result of BasicAccount, it will return a completely different result, breaking up the communication between classes. It violates LISKVOV principle.
 
 ## I: Interface Segregation Principle
 Clients should not be forced to depend on interfaces they do not use. This principle encourages smaller, more focused interfaces, reducing the coupling between modules.
@@ -85,26 +82,19 @@ class MultiFunctionDevice implements Printer, Scanner {
     }
 }
 ```
+Look, if one interface has two methods, we will be able to use 2 functions against our will, but with 2 differents one, now we can choose.
 
 ## D: Dependency Inversion Principle
 High-level modules should not depend on low-level modules. Both should depend on abstractions. This principle encourages loose coupling and modularity, making your code more maintainable and testable.
 
 ```
-interface Printer {
-    print(): void;
-}interface Scanner {
-    scan(): void;
+class DatabaseService
+
+class CreateUserController{
+   constructor(private repository: DatabaseService){}
 }
 
-class MultiFunctionDevice implements Printer, Scanner {
-    print(): void {
-        // Print
-    }
-
-    scan(): void {
-        // Scan
-    }
-}
+Instead of communicating with database on CreateUserController, we create a service for this, our controller cannot depend on which type of database we're using.
 ```
 
 
